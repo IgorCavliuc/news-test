@@ -1,10 +1,5 @@
-import {Link, useLocation} from "react-router-dom";
-import {useQuery} from "@apollo/client";
-import styled,{createGlobalStyle} from 'styled-components'
-import {query_news} from "../../server";
-import {useEffect} from "react";
-import {BigLoader} from "../../ui";
-import {formatTime} from "./utils";
+import { Link } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   img {
@@ -19,7 +14,6 @@ const Wrapper = styled.div`
   max-width: 825px;
   background-color: rgb(255, 255, 255);
   padding: 25px;
- 
   margin: 0 auto;
 `
 const SourceWrapper = styled.div`
@@ -128,65 +122,19 @@ const CustomLink = styled(Link)`
   }
 `
 
-const NewsDetale =()=>{
-    const { state: { id, url } } = useLocation();
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
-
-    const { loading, error, data } = useQuery(query_news, {
-        variables: { id, url },
-    })
-
-    if (loading) return <BigLoader>{'Идет загрузка'}</BigLoader>;
-    if (error) return <p>Error: {error.message}</p>;
-
-    const content = data?.content;
-
-    if (!content) return null;
-
-    const {
-        thumbnail,
-        title,
-        description,
-        parents,
-        dates,
-        counters,
-    } = content;
-
-    return(
-        <Wrapper>
-            <GlobalStyle />
-            <FullTop>
-                <SourceWrapper>
-                    {parents[1].attachment && (
-                        <SourceImage
-                            src={`https://i.simpalsmedia.com/point.md/logo/${parents[1].attachment}`}
-                            alt={parents[1].id}
-                        />
-                    )}
-                    <CustomLink to={`https://www.${parents[1].title.nu}/`}>
-                        {parents[1].title.nu}
-                    </CustomLink>
-                </SourceWrapper>
-                <TimeCreatingPost>{formatTime(dates.posted)}</TimeCreatingPost>
-                <CounterWrapper>
-                    <Counter>{counters.view}</Counter>
-                </CounterWrapper>
-            </FullTop>
-            <Title>{title.short}</Title>
-            <Intro>{description.intro}</Intro>
-            <Image
-                src={`https://i.simpalsmedia.com/point.md/news/600x315/${thumbnail}`}
-                alt="Full-photo"
-            />
-            <Thumbnail>{description.thumbnail}</Thumbnail>
-            <AdditionalContent
-                dangerouslySetInnerHTML={{ __html: description.long }}
-            />
-        </Wrapper>
-    )
+export {
+    GlobalStyle,
+    Wrapper,
+    SourceWrapper,
+    CounterWrapper,
+    Counter,
+    SourceImage,
+    FullTop,
+    Title,
+    Intro,
+    Thumbnail,
+    AdditionalContent,
+    Image,
+    TimeCreatingPost,
+    CustomLink
 }
-export default NewsDetale
-

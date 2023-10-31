@@ -24,17 +24,16 @@ export const calculateTime = (time) => {
     const days = Math.floor(hours / 24)
 
     if (minutes < 1) {
-        return 'just now'
+        return 'только что'
     } else if (minutes < 60) {
         return `${minutes} ${getNoun(minutes, [
             'минуту',
             'минуты',
             'минут',
-        ])} ago`
+        ])} назад`
     } else if (hours < 24) {
         return `${hours} ${getNoun(hours, ['час', 'часа', "часов"])} назад`
     } else {
         return `${days} ${getNoun(days, ['день', 'дня', "дней"])} назад`
     }
 }
-
