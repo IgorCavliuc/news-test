@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const ListWallpaper = styled.div`
   max-width: 984px;
-  width: 100%;
+  width: calc(100% - 30px);
   margin: 0 auto;
-  padding: 24px;
+  //padding: 24px;
   border-radius: 8px;
 `
 const List = styled.div`
